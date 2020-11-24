@@ -30,6 +30,7 @@ var ApiCalendar = function () {
             this.onLoad = this.onLoad.bind(this);
             this.setCalendar = this.setCalendar.bind(this);
             this.updateEvent = this.updateEvent.bind(this);
+            this.deleteEvent = this.deleteEvent.bind(this);
             this.handleClientLoad();
         } catch (e) {
             console.log(e);
@@ -236,6 +237,18 @@ var ApiCalendar = function () {
                 eventId,
                 'resource': event,
             });
+        }
+    }, {
+        key: 'deleteEvent',
+        value: function deleteEvent(eventId, calendarId = this.calendar) {
+            return this.gapi.client.calendar.events.delete({
+                'calendarId': calendarId,
+                'eventId': eventId
+            })
+            .then(function(response) {
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); }); 
         }
     }]);
 
